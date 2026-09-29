@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 
-public class MovieController : Controller
+public class MoviesController : Controller
 {
     private readonly MoviesAdminContext _context;
 
-    public MovieController(MoviesAdminContext context)
+    public MoviesController(MoviesAdminContext context)
     {
         _context = context;
     }
