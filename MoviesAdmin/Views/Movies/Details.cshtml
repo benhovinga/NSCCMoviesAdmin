@@ -1,22 +1,23 @@
 @model MoviesAdmin.Models.Movie
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Movie Details";
 }
 
-<h1>Details</h1>
+<h1 class="display-1">Movies</h1>
+<h4>Movie Details</h4>
+<hr />
 
 <div>
-    <h4>Movie</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
+            <strong>@Html.DisplayFor(model => model.Title)</strong>
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Synopsis)
         </dt>
@@ -24,6 +25,7 @@
             @Html.DisplayFor(model => model.Synopsis)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Genre)
         </dt>
@@ -31,6 +33,7 @@
             @Html.DisplayFor(model => model.Genre)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Rating)
         </dt>
@@ -38,6 +41,7 @@
             @Html.DisplayFor(model => model.Rating)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Runtime)
         </dt>
@@ -45,6 +49,7 @@
             @Html.DisplayFor(model => model.Runtime)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.ReleaseDate)
         </dt>
@@ -52,6 +57,7 @@
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Director)
         </dt>
@@ -59,6 +65,7 @@
             @Html.DisplayFor(model => model.Director)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Producer)
         </dt>
@@ -66,6 +73,7 @@
             @Html.DisplayFor(model => model.Producer)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Distributor)
         </dt>
@@ -73,6 +81,7 @@
             @Html.DisplayFor(model => model.Distributor)
         </dd>
     </dl>
+    <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.OriginalLanguage)
         </dt>

@@ -1,12 +1,12 @@
 @model MoviesAdmin.Models.Movie
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Movie";
 }
 
-<h1>Edit</h1>
+<h1 class="display-1">Movies</h1>
 
-<h4>Movie</h4>
+<h4>Edit Movie</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,7 +20,7 @@
             </div>
             <div class="mb-3">
                 <label asp-for="Synopsis" class="form-label"></label>
-                <input asp-for="Synopsis" class="form-control" />
+                <textarea rows="3" asp-for="Synopsis" class="form-control"></textarea>
                 <span asp-validation-for="Synopsis" class="text-danger"></span>
             </div>
             <div class="mb-3">
