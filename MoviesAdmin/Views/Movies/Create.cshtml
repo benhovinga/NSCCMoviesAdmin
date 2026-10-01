@@ -13,66 +13,66 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Synopsis" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Synopsis" class="form-label"></label>
                 <input asp-for="Synopsis" class="form-control" />
                 <span asp-validation-for="Synopsis" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Genre" class="form-label"></label>
                 <input asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Rating" class="form-label"></label>
                 <input asp-for="Rating" class="form-control" />
                 <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Runtime" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Runtime" class="form-label"></label>
                 <input asp-for="Runtime" class="form-control" />
                 <span asp-validation-for="Runtime" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="ReleaseDate" class="control-label"></label>
-                <input asp-for="ReleaseDate" class="form-control" />
+            <div class="mb-3">
+                <label asp-for="ReleaseDate" class="form-label"></label>
+                <input type="date" asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Director" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Director" class="form-label"></label>
                 <input asp-for="Director" class="form-control" />
                 <span asp-validation-for="Director" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Producer" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Producer" class="form-label"></label>
                 <input asp-for="Producer" class="form-control" />
                 <span asp-validation-for="Producer" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Distributor" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Distributor" class="form-label"></label>
                 <input asp-for="Distributor" class="form-control" />
                 <span asp-validation-for="Distributor" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="OriginalLanguage" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="OriginalLanguage" class="form-label"></label>
                 <input asp-for="OriginalLanguage" class="form-control" />
                 <span asp-validation-for="OriginalLanguage" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="mb-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
