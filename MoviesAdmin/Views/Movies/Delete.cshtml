@@ -92,7 +92,13 @@
     </dl>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-danger">
+            <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
+            Delete
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <svg class="bi me-1" aria-hidden="true"><use href="#x-lg"></use></svg>
+            Cancel
+        </a>
     </form>
 </div>

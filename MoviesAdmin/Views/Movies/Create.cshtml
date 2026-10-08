@@ -73,12 +73,16 @@
                 <span asp-validation-for="OriginalLanguage" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">
+                    <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
+                    Create
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    <svg class="bi me-1" aria-hidden="true"><use href="#x-lg"></use></svg>
+                    Cancel
+                </a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

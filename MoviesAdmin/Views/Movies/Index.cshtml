@@ -8,7 +8,7 @@
 
 <p class="text-end">
     <a asp-action="Create" class="btn btn-primary">
-        <i class="bi bi-plus-circle" aria-hidden="true"></i>
+        <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
         Add Movie
     </a>
 </p>
@@ -54,13 +54,14 @@
                 @Html.DisplayFor(model => item.ReleaseDate)
             </td>
             <td class="no-wrap">
+                <!-- Actions column -->
                 <div class="btn-group" role="group">
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">
-                        <i class="bi bi-pencil" aria-hidden="true"></i>
+                        <svg class="bi" aria-hidden="true"><use href="#pencil"></use></svg>
                         Edit
                     </a>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
-                        <i class="bi bi-trash3" aria-hidden="true"></i>
+                        <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
                         Delete
                     </a>
                 </div>

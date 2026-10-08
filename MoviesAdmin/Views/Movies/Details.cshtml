@@ -91,6 +91,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">
+        <svg class="bi me-1" aria-hidden="true"><use href="#pencil"></use></svg>
+        Edit
+    </a>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Go back to list
+    </a>
 </div>
