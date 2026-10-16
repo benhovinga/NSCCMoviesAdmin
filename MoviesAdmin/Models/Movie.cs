@@ -40,5 +40,9 @@ namespace MoviesAdmin.Models
         [Display(Name = "Original Language")]
         [Required]
         public string OriginalLanguage { get; set; }
+
+        [Display(Name = "Poster Image")]
+        [Required]
+        public string PosterUrl { get; set;  }
     }
 }

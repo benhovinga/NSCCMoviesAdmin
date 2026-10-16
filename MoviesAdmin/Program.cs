@@ -1,8 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using MoviesAdmin.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("MoviesAdminContext") ?? throw new InvalidOperationException("Connection string 'MoviesAdminContext' not found.");
 
 builder.Services.AddDbContext<MoviesAdminContext>(options => options.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -2,18 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
+using MoviesAdmin.Services;
 
 public class MoviesController : Controller
 {
     private readonly MoviesAdminContext _context;
+    private readonly IAzureStorageService _storageService;
 
-    public MoviesController(MoviesAdminContext context)
+    public MoviesController(MoviesAdminContext context, IAzureStorageService azureStorageService)
     {
         _context = context;
+        _storageService = azureStorageService;
     }
 
     // GET: MOVIES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
         var trails = await _context.Movie
             .OrderByDescending(t => t.ReleaseDate)
@@ -51,14 +54,25 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie)
+    public async Task<IActionResult> Create([Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie, IFormFile PosterFile)
     {
+        if (PosterFile != null && PosterFile.Length > 0)
+        {
+            Guid gid = Guid.NewGuid();
+            movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, gid.ToString());
+
+            // Remove the validation error generated before PosterUrl was assigned.
+            ModelState.Remove(nameof(Movie.PosterUrl));
+        }
+
         if (ModelState.IsValid)
         {
             _context.Add(movie);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
+
         return View(movie);
     }
 
@@ -83,11 +97,36 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie, IFormFile? PosterFile)
     {
         if (id != movie.Id)
         {
             return NotFound();
+        }
+
+        if (PosterFile != null && PosterFile.Length > 0)
+        {
+            Guid gid = Guid.NewGuid();
+            movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, gid.ToString());
+        }
+        else
+        {
+            var existingMovie = await _context.Movie
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (existingMovie == null)
+            {
+                return NotFound();
+            }
+
+            movie.PosterUrl = existingMovie.PosterUrl;
+        }
+
+        if (movie.PosterUrl != null && movie.PosterUrl != string.Empty)
+        {
+            // Remove the validation error generated before PosterUrl was assigned.
+            ModelState.Remove(nameof(Movie.PosterUrl));
         }
 
         if (ModelState.IsValid)

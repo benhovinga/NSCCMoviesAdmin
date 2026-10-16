@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="mb-3">
@@ -72,6 +72,13 @@
                 <input asp-for="OriginalLanguage" class="form-control" />
                 <span asp-validation-for="OriginalLanguage" class="text-danger"></span>
             </div>
+
+            <div class="mb-3">
+                <label for="PosterFile" class="form-label">Poster Image</label>
+                <input type="file" id="PosterFile" name="PosterFile" class="form-control" />
+                <span asp-validation-for="PosterUrl" class="text-danger"></span>
+            </div>
+
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">
                     <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
