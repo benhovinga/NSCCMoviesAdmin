@@ -87,14 +87,14 @@
     <tr>
         <td class="row">
             <div class="col-3 col-lg-2">
-                <a asp-action="Details" asp-route-id="@item.Id">
+                <a asp-action="Details" asp-route-id="@item.MovieId">
                     <img src="@Html.DisplayFor(model => item.PosterUrl)" alt="@Html.DisplayFor(model => item.Title)" class="w-100" />
                 </a>
             </div>
 
             <div class="col position-relative">
                 <div class="pb-2">
-                    <strong><a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(model => item.Title)</a></strong>
+                    <strong><a asp-action="Details" asp-route-id="@item.MovieId">@Html.DisplayFor(model => item.Title)</a></strong>
                 </div>
                 <div class="pb-2">
                     <small>@Html.DisplayFor(model => item.ReleaseDate.Year) • @Html.DisplayFor(model => item.Rating) • @Html.DisplayFor(model => item.Runtime)m</small>
@@ -108,11 +108,11 @@
                 <p class="mb-5">@Html.DisplayFor(model => item.Synopsis)</p>
                 
                 <div class="btn-group position-absolute bottom-0 end-0" role="group">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary" title="Edit Movie">
+                    <a asp-action="Edit" asp-route-id="@item.MovieId" class="btn btn-secondary" title="Edit Movie">
                         <svg class="bi" aria-hidden="true"><use href="#pencil"></use></svg>
                         Edit
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Delete Movie">
+                    <a asp-action="Delete" asp-route-id="@item.MovieId" class="btn btn-danger" title="Delete Movie">
                         <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
                         <span class="visually-hidden">Delete</span>
                     </a>

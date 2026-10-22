@@ -4,7 +4,7 @@ namespace MoviesAdmin.Models
 {
     public class AudienceRating
     {
-        public int Id { get; set; }
+        public int AudienceRatingId { get; set; }
 
         [Display(Name = "Rating")]
         [StringLength(10)]

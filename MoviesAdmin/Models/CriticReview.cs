@@ -4,7 +4,7 @@ namespace MoviesAdmin.Models
 {
     public class CriticReview
     {
-        public int Id { get; set; }
+        public int CriticReviewId { get; set; }
 
         [Required]
         public string Description { get; set; }

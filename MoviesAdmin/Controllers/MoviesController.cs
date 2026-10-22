@@ -34,7 +34,7 @@ public class MoviesController : Controller
         }
 
         var movie = await _context.Movie
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstOrDefaultAsync(m => m.MovieId == id);
         if (movie == null)
         {
             return NotFound();
@@ -99,7 +99,7 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie, IFormFile? PosterFile)
     {
-        if (id != movie.Id)
+        if (id != movie.MovieId)
         {
             return NotFound();
         }
@@ -113,7 +113,7 @@ public class MoviesController : Controller
         {
             var existingMovie = await _context.Movie
                 .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MovieId == id);
 
             if (existingMovie == null)
             {
@@ -138,7 +138,7 @@ public class MoviesController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MovieExists(movie.Id))
+                if (!MovieExists(movie.MovieId))
                 {
                     return NotFound();
                 }
@@ -161,7 +161,7 @@ public class MoviesController : Controller
         }
 
         var movie = await _context.Movie
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstOrDefaultAsync(m => m.MovieId == id);
         if (movie == null)
         {
             return NotFound();
@@ -187,6 +187,6 @@ public class MoviesController : Controller
 
     private bool MovieExists(int? id)
     {
-        return _context.Movie.Any(e => e.Id == id);
+        return _context.Movie.Any(e => e.MovieId == id);
     }
 }
