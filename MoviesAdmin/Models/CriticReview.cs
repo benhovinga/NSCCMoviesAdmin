@@ -7,7 +7,7 @@ namespace MoviesAdmin.Models
         public int CriticReviewId { get; set; }
 
         [Required]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Display(Name = "Star Rating")]
         [Range(1, 5)]
@@ -20,7 +20,7 @@ namespace MoviesAdmin.Models
 
         [Display(Name = "Created By")]
         [Required]
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = string.Empty;
 
         [Display(Name = "Created Date")]
         [Required]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
@@ -7,8 +8,11 @@ namespace MoviesAdmin.Models
         public int GenreId { get; set; }
 
         [Display(Name = "Genre")]
-        [StringLength(100)]
+        [StringLength(50)]
         [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
+
+        [ValidateNever]
+        public ICollection<Movie> Movies { get; } = new List<Movie>();
     }
 }

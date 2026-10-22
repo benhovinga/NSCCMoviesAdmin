@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoviesAdmin.Models
 {
@@ -8,16 +10,22 @@ namespace MoviesAdmin.Models
 
         [StringLength(150)]
         [Required]
-        public required string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required]
-        public string Synopsis { get; set; }
+        public string Synopsis { get; set; } = string.Empty;
+
+        //[Required]
+        //public string Genre { get; set; }
+
+        [ForeignKey("Genre")]
+        public int GenreId { get; set; }
+
+        [ValidateNever]
+        public Genre Genre { get; set; } = null!; // Navigation property
 
         [Required]
-        public string Genre { get; set; }
-
-        [Required]
-        public string Rating { get; set; }
+        public string Rating { get; set; } = string.Empty;
 
         [Display(Name = "Runtime (minutes)")]
         [Range(0, double.PositiveInfinity)]
@@ -29,20 +37,20 @@ namespace MoviesAdmin.Models
         public DateOnly ReleaseDate { get; set; }
 
         [Required]
-        public string Director { get; set; }
+        public string Director { get; set; } = string.Empty;
 
         [Required]
-        public string Producer { get; set; }
+        public string Producer { get; set; } = string.Empty;
 
         [Required]
-        public string Distributor { get; set; }
+        public string Distributor { get; set; } = string.Empty;
 
         [Display(Name = "Original Language")]
         [Required]
-        public string OriginalLanguage { get; set; }
+        public string OriginalLanguage { get; set; } = string.Empty;
 
         [Display(Name = "Poster Image")]
         [Required]
-        public string PosterUrl { get; set;  }
+        public string PosterUrl { get; set; } = string.Empty;
     }
 }

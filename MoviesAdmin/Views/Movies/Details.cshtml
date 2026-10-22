@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = $"{Model.Title} ({Model.ReleaseDate.Year})";
-    var genres = Model.Genre.Split(',');
+    //var genres = Model.Genre.Split(',');
 }
 
 <div class="container">
@@ -13,10 +13,10 @@
     <img src="@Model.PosterUrl" alt="@Model.Title" width="300" class="mx-auto d-block float-md-end ps-0 ps-md-3" />
     
     <div class="mb-3">
-        @foreach (var genre in genres)
+        @* @foreach (var genre in genres)
         {
             <span class="badge text-bg-secondary">@genre.Trim()</span>
-        }
+        } *@
     </div>
 
     <p>

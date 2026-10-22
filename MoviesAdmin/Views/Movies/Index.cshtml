@@ -82,7 +82,7 @@
 
 <table class="table table-striped table-hover">
 @foreach (var item in Model) {
-    var genres = item.Genre.Split(',');
+    //var genres = item.Genre.Split(',');
     
     <tr>
         <td class="row">
@@ -100,10 +100,10 @@
                     <small>@Html.DisplayFor(model => item.ReleaseDate.Year) • @Html.DisplayFor(model => item.Rating) • @Html.DisplayFor(model => item.Runtime)m</small>
                 </div>
                 <div class="pb-2">
-                    @foreach (var genre in genres)
+                    @* @foreach (var genre in genres)
                     {
                         <span class="badge text-bg-secondary">@genre.Trim()</span>
-                    }
+                    } *@
                 </div>
                 <p class="mb-5">@Html.DisplayFor(model => item.Synopsis)</p>
                 

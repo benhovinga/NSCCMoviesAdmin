@@ -9,6 +9,6 @@ namespace MoviesAdmin.Models
         [Display(Name = "Rating")]
         [StringLength(10)]
         [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
     }
 }
