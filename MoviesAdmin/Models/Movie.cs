@@ -15,9 +15,6 @@ namespace MoviesAdmin.Models
         [Required]
         public string Synopsis { get; set; } = string.Empty;
 
-        //[Required]
-        //public string Genre { get; set; }
-
         [ForeignKey("Genre")]
         public int GenreId { get; set; }
 

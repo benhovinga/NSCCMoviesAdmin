@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
@@ -20,6 +21,7 @@ public class MoviesController : Controller
     {
         var trails = await _context.Movie
             .OrderByDescending(t => t.ReleaseDate)
+            .Include(m => m.Genre)
             .ToListAsync();
 
         return View(trails);
@@ -34,6 +36,7 @@ public class MoviesController : Controller
         }
 
         var movie = await _context.Movie
+            .Include(m => m.Genre)
             .FirstOrDefaultAsync(m => m.MovieId == id);
         if (movie == null)
         {
@@ -46,6 +49,12 @@ public class MoviesController : Controller
     // GET: MOVIES/Create
     public IActionResult Create()
     {
+        // Add a dropdown field for all Genres
+        ViewBag.GenreId = new SelectList(
+            _context.Genre.ToList(),
+            nameof(Genre.GenreId),
+            nameof(Genre.Title)
+        );
         return View();
     }
 
@@ -54,15 +63,26 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie, IFormFile PosterFile)
+    public async Task<IActionResult> Create([Bind("MovieId,Title,Synopsis,GenreId,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile PosterFile)
     {
+        Console.WriteLine($"[DEBUG] POST PosterUrl: \"{movie.PosterUrl}\"");
+
         if (PosterFile != null && PosterFile.Length > 0)
         {
-            Guid gid = Guid.NewGuid();
-            movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, gid.ToString());
-
             // Remove the validation error generated before PosterUrl was assigned.
             ModelState.Remove(nameof(Movie.PosterUrl));
+
+            try
+            {
+                // Upload poster to storage service with unique id
+                Guid guid = Guid.NewGuid();
+                movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, guid.ToString());
+                Console.WriteLine($"[DEBUG] SET PosterUrl: \"{movie.PosterUrl}\"");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(nameof(Movie.PosterUrl), $"Error: Movie poster upload failed. {ex.Message}");
+            }
         }
 
         if (ModelState.IsValid)
@@ -72,6 +92,16 @@ public class MoviesController : Controller
 
             return RedirectToAction(nameof(Index));
         }
+
+        // Rebuild the dropdown if validation fails
+        ViewBag.GenreId = new SelectList(
+            _context.Genre.ToList(),
+            nameof(Genre.GenreId),
+            nameof(Genre.Title),
+            movie.GenreId
+        );
+
+        Console.WriteLine($"[DEBUG] VIEW PosterUrl: \"{movie.PosterUrl}\"");
 
         return View(movie);
     }
@@ -89,6 +119,15 @@ public class MoviesController : Controller
         {
             return NotFound();
         }
+
+        // Add a dropdown field for all Genres
+        ViewBag.GenreId = new SelectList(
+            _context.Genre.ToList(),
+            nameof(Genre.GenreId),
+            nameof(Genre.Title),
+            movie.GenreId
+        );
+
         return View(movie);
     }
 
@@ -97,36 +136,29 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,Synopsis,Genre,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage")] Movie movie, IFormFile? PosterFile)
+    public async Task<IActionResult> Edit(int? id, [Bind("MovieId,Title,Synopsis,GenreId,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile? PosterFile)
     {
         if (id != movie.MovieId)
         {
             return NotFound();
         }
 
+        // Upload new poster if one is set
         if (PosterFile != null && PosterFile.Length > 0)
-        {
-            Guid gid = Guid.NewGuid();
-            movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, gid.ToString());
-        }
-        else
-        {
-            var existingMovie = await _context.Movie
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.MovieId == id);
-
-            if (existingMovie == null)
-            {
-                return NotFound();
-            }
-
-            movie.PosterUrl = existingMovie.PosterUrl;
-        }
-
-        if (movie.PosterUrl != null && movie.PosterUrl != string.Empty)
         {
             // Remove the validation error generated before PosterUrl was assigned.
             ModelState.Remove(nameof(Movie.PosterUrl));
+
+            try
+            {
+                // Upload poster to storage service with unique id
+                Guid guid = Guid.NewGuid();
+                movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, guid.ToString());
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(nameof(Movie.PosterUrl), $"Error: Movie poster upload failed. {ex.Message}");
+            }
         }
 
         if (ModelState.IsValid)
@@ -149,6 +181,15 @@ public class MoviesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+
+        // Rebuild the dropdown if validation fails
+        ViewBag.GenreId = new SelectList(
+            _context.Genre.ToList(),
+            nameof(Genre.GenreId),
+            nameof(Genre.Title),
+            movie.GenreId
+        );
+
         return View(movie);
     }
 

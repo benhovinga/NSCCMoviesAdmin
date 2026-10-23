@@ -13,10 +13,7 @@
     <img src="@Model.PosterUrl" alt="@Model.Title" width="300" class="mx-auto d-block float-md-end ps-0 ps-md-3" />
     
     <div class="mb-3">
-        @* @foreach (var genre in genres)
-        {
-            <span class="badge text-bg-secondary">@genre.Trim()</span>
-        } *@
+        <span class="badge text-bg-secondary">@Html.DisplayFor(model => model.Genre.Title)</span>
     </div>
 
     <p>

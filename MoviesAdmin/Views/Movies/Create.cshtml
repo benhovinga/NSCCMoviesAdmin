@@ -26,9 +26,11 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Genre" class="form-label"></label>
-                <input asp-for="Genre" class="form-control" />
-                <span asp-validation-for="Genre" class="text-danger"></span>
+                <label asp-for="GenreId" class="form-label"></label>
+                <select asp-for="GenreId" class="form-control" asp-items="ViewBag.GenreId">
+                    <option value="">-- Select a genre --</option>
+                </select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
@@ -76,6 +78,7 @@
             <div class="mb-3">
                 <label for="PosterFile" class="form-label">Poster Image</label>
                 <input type="file" id="PosterFile" name="PosterFile" class="form-control" />
+                <input type="hidden" asp-for="PosterUrl" />
                 <span asp-validation-for="PosterUrl" class="text-danger"></span>
             </div>
 
