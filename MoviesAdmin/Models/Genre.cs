@@ -13,6 +13,6 @@ namespace MoviesAdmin.Models
         public string Title { get; set; } = string.Empty;
 
         [ValidateNever]
-        public ICollection<Movie> Movies { get; } = new List<Movie>();
+        public ICollection<Movie> Movies { get; } = new List<Movie>(); // Navigation Property
     }
 }

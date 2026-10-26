@@ -1,31 +1,38 @@
 @model MoviesAdmin.Models.Genre
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Title;
 }
 
-<h1>Details</h1>
+
+<h2 class="display-3">@Html.DisplayFor(model => model.Title)</h2>
+<hr />
 
 <div>
-    <h4>Genre</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-    </dl>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Movies)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Movies)
-        </dd>
-    </dl>
+    <p>Movies in the <strong>@Html.DisplayFor(model => model.Title)</strong> genre.</p>
+    <ul>
+        @if(Model.Movies.Count == 0)
+        {
+            <li>No Movies</li>
+        } else
+        {
+            @foreach (var movie in Model.Movies)
+            {
+                <li>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@Html.DisplayFor(model => movie.Title)</a>
+                </li>
+            }
+        }
+    </ul>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.GenreId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.GenreId" class="btn btn-primary" title="Edit Genre">
+        <svg class="bi me-1" aria-hidden="true"><use href="#pencil"></use></svg>
+        Edit
+    </a>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Go back to list
+    </a>
 </div>

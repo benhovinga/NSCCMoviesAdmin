@@ -13,21 +13,27 @@ public class GenresController : Controller
     }
 
     // GET: GENRES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Genre.ToListAsync());
+        var genres = await _context.Genre
+            .Include(m => m.Movies)
+            .OrderBy(t => t.Title)
+            .ToListAsync();
+        return View(genres);
     }
 
     // GET: GENRES/Details/5
-    public async Task<IActionResult> Details(int? genreid)
+    public async Task<IActionResult> Details(int? id)
     {
-        if (genreid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var genre = await _context.Genre
-            .FirstOrDefaultAsync(m => m.GenreId == genreid);
+            .Include(m => m.Movies)
+            .FirstOrDefaultAsync(m => m.GenreId == id);
+
         if (genre == null)
         {
             return NotFound();
@@ -47,7 +53,7 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("GenreId,Title,Movies")] Genre genre)
+    public async Task<IActionResult> Create([Bind("GenreId,Title")] Genre genre)
     {
         if (ModelState.IsValid)
         {
@@ -59,14 +65,14 @@ public class GenresController : Controller
     }
 
     // GET: GENRES/Edit/5
-    public async Task<IActionResult> Edit(int? genreid)
+    public async Task<IActionResult> Edit(int? id)
     {
-        if (genreid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
-        var genre = await _context.Genre.FindAsync(genreid);
+        var genre = await _context.Genre.FindAsync(id);
         if (genre == null)
         {
             return NotFound();
@@ -79,9 +85,9 @@ public class GenresController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? genreid, [Bind("GenreId,Title,Movies")] Genre genre)
+    public async Task<IActionResult> Edit(int? id, [Bind("GenreId,Title")] Genre genre)
     {
-        if (genreid != genre.GenreId)
+        if (id != genre.GenreId)
         {
             return NotFound();
         }
@@ -110,15 +116,16 @@ public class GenresController : Controller
     }
 
     // GET: GENRES/Delete/5
-    public async Task<IActionResult> Delete(int? genreid)
+    public async Task<IActionResult> Delete(int? id)
     {
-        if (genreid == null)
+        if (id == null)
         {
             return NotFound();
         }
 
         var genre = await _context.Genre
-            .FirstOrDefaultAsync(m => m.GenreId == genreid);
+            .Include(m => m.Movies)
+            .FirstOrDefaultAsync(m => m.GenreId == id);
         if (genre == null)
         {
             return NotFound();
@@ -130,9 +137,9 @@ public class GenresController : Controller
     // POST: GENRES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? genreid)
+    public async Task<IActionResult> DeleteConfirmed(int? id)
     {
-        var genre = await _context.Genre.FindAsync(genreid);
+        var genre = await _context.Genre.FindAsync(id);
         if (genre != null)
         {
             _context.Genre.Remove(genre);
@@ -142,8 +149,8 @@ public class GenresController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    private bool GenreExists(int? genreid)
+    private bool GenreExists(int? id)
     {
-        return _context.Genre.Any(e => e.GenreId == genreid);
+        return _context.Genre.Any(e => e.GenreId == id);
     }
 }

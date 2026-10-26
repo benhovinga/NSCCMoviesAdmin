@@ -1,7 +1,7 @@
 @model MoviesAdmin.Models.Genre
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Genre";
 }
 
 <h1>Edit</h1>
@@ -13,25 +13,26 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="GenreId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Movies" class="control-label"></label>
-                <input asp-for="Movies" class="form-control" />
-                <span asp-validation-for="Movies" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary" title="Save Genre">
+                    <svg class="bi me-1" aria-hidden="true"><use href="#floppy"></use></svg>
+                    Save
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    <svg class="bi me-1" aria-hidden="true"><use href="#x-lg"></use></svg>
+                    Cancel
+                </a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
