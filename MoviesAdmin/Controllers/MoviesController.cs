@@ -38,6 +38,7 @@ public class MoviesController : Controller
         var movie = await _context.Movie
             .Include(m => m.Genre)
             .FirstOrDefaultAsync(m => m.MovieId == id);
+
         if (movie == null)
         {
             return NotFound();
@@ -65,8 +66,6 @@ public class MoviesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("MovieId,Title,Synopsis,GenreId,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile PosterFile)
     {
-        Console.WriteLine($"[DEBUG] POST PosterUrl: \"{movie.PosterUrl}\"");
-
         if (PosterFile != null && PosterFile.Length > 0)
         {
             // Remove the validation error generated before PosterUrl was assigned.
@@ -77,7 +76,6 @@ public class MoviesController : Controller
                 // Upload poster to storage service with unique id
                 Guid guid = Guid.NewGuid();
                 movie.PosterUrl = await _storageService.UploadFileAsync(PosterFile, guid.ToString());
-                Console.WriteLine($"[DEBUG] SET PosterUrl: \"{movie.PosterUrl}\"");
             }
             catch (Exception ex)
             {
@@ -100,8 +98,6 @@ public class MoviesController : Controller
             nameof(Genre.Title),
             movie.GenreId
         );
-
-        Console.WriteLine($"[DEBUG] VIEW PosterUrl: \"{movie.PosterUrl}\"");
 
         return View(movie);
     }
