@@ -27,8 +27,8 @@
 
             <div class="mb-3">
                 <label asp-for="GenreId" class="form-label"></label>
-                <select asp-for="GenreId" class="form-control" asp-items="ViewBag.GenreId">
-                    <option value="">-- Select a genre --</option>
+                <select asp-for="GenreId" class="form-control form-select" asp-items="ViewBag.GenreId">
+                    <option value="">-- Select a Genre --</option>
                 </select>
                 <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
