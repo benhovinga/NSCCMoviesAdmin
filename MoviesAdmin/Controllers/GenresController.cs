@@ -55,12 +55,19 @@ public class GenresController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("GenreId,Title")] Genre genre)
     {
+        // Check if record already exists
+        if (await _context.Genre.AnyAsync(m => m.Title == genre.Title))
+        {
+            ModelState.AddModelError(nameof(Genre.Title), "Genre already exists");
+        }
+
         if (ModelState.IsValid)
         {
             _context.Add(genre);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         return View(genre);
     }
 
@@ -90,6 +97,12 @@ public class GenresController : Controller
         if (id != genre.GenreId)
         {
             return NotFound();
+        }
+
+        // Check if record already exists
+        if (await _context.Genre.AnyAsync(m => m.GenreId != genre.GenreId && m.Title == genre.Title))
+        {
+            ModelState.AddModelError(nameof(Genre.Title), "Genre already exists");
         }
 
         if (ModelState.IsValid)
