@@ -36,6 +36,9 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("GenreId");
 
+                    b.HasIndex("Title")
+                        .IsUnique();
+
                     b.ToTable("Genre");
                 });
 

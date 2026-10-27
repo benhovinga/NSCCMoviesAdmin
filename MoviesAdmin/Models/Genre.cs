@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace MoviesAdmin.Models
 {
+    [Index(nameof(Title), IsUnique = true)]
     public class Genre
     {
         public int GenreId { get; set; }
