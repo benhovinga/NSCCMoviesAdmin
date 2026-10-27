@@ -15,14 +15,19 @@ namespace MoviesAdmin.Models
         [Required]
         public string Synopsis { get; set; } = string.Empty;
 
-        [ForeignKey("Genre")]
+        [ForeignKey(nameof(Genre))]
+        [Display(Name = "Genre")]
         public int GenreId { get; set; }
 
         [ValidateNever]
         public Genre Genre { get; set; } = null!; // Navigation property
 
-        [Required]
-        public string Rating { get; set; } = string.Empty;
+        [ForeignKey(nameof(AudienceRating))]
+        [Display(Name = "Audience Rating")]
+        public int AudienceRatingId { get; set; }
+
+        [ValidateNever]
+        public AudienceRating AudienceRating { get; set; } = null!; // Navigation property
 
         [Display(Name = "Runtime (minutes)")]
         [Range(0, double.PositiveInfinity)]

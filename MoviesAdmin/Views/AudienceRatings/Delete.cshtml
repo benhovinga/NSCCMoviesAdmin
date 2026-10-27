@@ -1,0 +1,43 @@
+@model MoviesAdmin.Models.AudienceRating
+
+@{
+    ViewData["Title"] = "Delete Audience Rating";
+}
+
+<h1 class="display-1">Delete Audience Rating</h1>
+<hr />
+
+<div>
+    <h3 class="mb-5">Are you sure you want to delete this audience rating?</h3>
+
+    <h3 class="mb-5 ms-5">@Html.DisplayFor(model => model.Title)</h3>
+
+    <p>Movies with this rating:</p>
+    <ul class="mb-5">
+        @if (Model.Movies.Count == 0)
+        {
+            <li>No Movies</li>
+        }
+        else
+        {
+            @foreach (var movie in Model.Movies)
+            {
+                <li>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@Html.DisplayFor(model => movie.Title)</a>
+                </li>
+            }
+        }
+    </ul>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AudienceRatingId" />
+        <button type="submit" class="btn btn-danger" title="Delete Genre">
+            <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
+            Delete
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <svg class="bi me-1" aria-hidden="true"><use href="#x-lg"></use></svg>
+            Cancel
+        </a>
+    </form>
+</div>

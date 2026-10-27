@@ -1,0 +1,35 @@
+@model MoviesAdmin.Models.AudienceRating
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="display-1">Audience Rating</h1>
+
+<h4>Add new audience rating</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6 col-lg-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary" title="Create Genre">
+                    <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
+                    Create
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    <svg class="bi me-1" aria-hidden="true"><use href="#x-lg"></use></svg>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>

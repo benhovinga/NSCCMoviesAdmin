@@ -28,7 +28,7 @@
                     <strong><a asp-action="Details" asp-route-id="@item.MovieId">@Html.DisplayFor(model => item.Title)</a></strong>
                 </div>
                 <div class="pb-2">
-                    <small>@Html.DisplayFor(model => item.ReleaseDate.Year) • @Html.DisplayFor(model => item.Rating) • @Html.DisplayFor(model => item.Runtime)m</small>
+                    <small>@Html.DisplayFor(model => item.ReleaseDate.Year) • @Html.DisplayFor(model => item.AudienceRating.Title) • @Html.DisplayFor(model => item.Runtime)m</small>
                 </div>
                 <div class="pb-2">
                     <span class="badge text-bg-secondary">@Html.DisplayFor(model => item.Genre.Title)</span>

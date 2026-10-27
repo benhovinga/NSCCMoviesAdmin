@@ -1,0 +1,38 @@
+@model MoviesAdmin.Models.AudienceRating
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2 class="display-3">@Html.DisplayFor(model => model.Title)</h2>
+<hr />
+
+<div class="mb-5">
+    <p>Movies rated <strong>@Html.DisplayFor(model => model.Title)</strong>.</p>
+    <ul>
+        @if (Model.Movies.Count == 0)
+        {
+            <li>No Movies</li>
+        }
+        else
+        {
+            @foreach (var movie in Model.Movies)
+            {
+                <li>
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId">@Html.DisplayFor(model => movie.Title)</a>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.AudienceRatingId" class="btn btn-primary" title="Edit Rating">
+        <svg class="bi me-1" aria-hidden="true"><use href="#pencil"></use></svg>
+        Edit
+    </a>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Go back to list
+    </a>
+</div>

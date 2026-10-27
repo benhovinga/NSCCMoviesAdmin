@@ -22,6 +22,7 @@ public class MoviesController : Controller
         var trails = await _context.Movie
             .OrderByDescending(t => t.ReleaseDate)
             .Include(m => m.Genre)
+            .Include(m => m.AudienceRating)
             .ToListAsync();
 
         return View(trails);
@@ -37,6 +38,7 @@ public class MoviesController : Controller
 
         var movie = await _context.Movie
             .Include(m => m.Genre)
+            .Include(m => m.AudienceRating)
             .FirstOrDefaultAsync(m => m.MovieId == id);
 
         if (movie == null)
@@ -56,6 +58,14 @@ public class MoviesController : Controller
             nameof(Genre.GenreId),
             nameof(Genre.Title)
         );
+
+        // Add a dropdown field for all Ratings
+        ViewBag.AudienceRatingId = new SelectList(
+            _context.AudienceRating.ToList(),
+            nameof(AudienceRating.AudienceRatingId),
+            nameof(AudienceRating.Title)
+        );
+
         return View();
     }
 
@@ -91,12 +101,20 @@ public class MoviesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        // Rebuild the dropdown if validation fails
+        // Rebuild the genre dropdown if validation fails
         ViewBag.GenreId = new SelectList(
             _context.Genre.ToList(),
             nameof(Genre.GenreId),
             nameof(Genre.Title),
             movie.GenreId
+        );
+
+        // Rebuild the rating dropdown if validation fails
+        ViewBag.AudienceRatingId = new SelectList(
+            _context.AudienceRating.ToList(),
+            nameof(AudienceRating.AudienceRatingId),
+            nameof(AudienceRating.Title),
+            movie.AudienceRatingId
         );
 
         return View(movie);
@@ -122,6 +140,13 @@ public class MoviesController : Controller
             nameof(Genre.GenreId),
             nameof(Genre.Title),
             movie.GenreId
+        );
+
+        // Add a dropdown field for all Ratings
+        ViewBag.AudienceRatingId = new SelectList(
+            _context.AudienceRating.ToList(),
+            nameof(AudienceRating.AudienceRatingId),
+            nameof(AudienceRating.Title)
         );
 
         return View(movie);
@@ -178,12 +203,20 @@ public class MoviesController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        // Rebuild the dropdown if validation fails
+        // Rebuild the genre dropdown if validation fails
         ViewBag.GenreId = new SelectList(
             _context.Genre.ToList(),
             nameof(Genre.GenreId),
             nameof(Genre.Title),
             movie.GenreId
+        );
+
+        // Rebuild the rating dropdown if validation fails
+        ViewBag.AudienceRatingId = new SelectList(
+            _context.AudienceRating.ToList(),
+            nameof(AudienceRating.AudienceRatingId),
+            nameof(AudienceRating.Title),
+            movie.AudienceRatingId
         );
 
         return View(movie);

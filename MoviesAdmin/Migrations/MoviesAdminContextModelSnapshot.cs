@@ -16,10 +16,31 @@ namespace MoviesAdmin.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.13")
+                .HasAnnotation("ProductVersion", "10.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>
+                {
+                    b.Property<int>("AudienceRatingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AudienceRatingId"));
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("AudienceRatingId");
+
+                    b.HasIndex("Title")
+                        .IsUnique();
+
+                    b.ToTable("AudienceRating");
+                });
 
             modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
                 {
@@ -50,6 +71,9 @@ namespace MoviesAdmin.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovieId"));
 
+                    b.Property<int>("AudienceRatingId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Director")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -73,10 +97,6 @@ namespace MoviesAdmin.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateOnly>("ReleaseDate")
                         .HasColumnType("date");
 
@@ -94,6 +114,8 @@ namespace MoviesAdmin.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("AudienceRatingId");
+
                     b.HasIndex("GenreId");
 
                     b.ToTable("Movie");
@@ -101,13 +123,26 @@ namespace MoviesAdmin.Migrations
 
             modelBuilder.Entity("MoviesAdmin.Models.Movie", b =>
                 {
+                    b.HasOne("MoviesAdmin.Models.AudienceRating", "AudienceRating")
+                        .WithMany("Movies")
+                        .HasForeignKey("AudienceRatingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MoviesAdmin.Models.Genre", "Genre")
                         .WithMany("Movies")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AudienceRating");
+
                     b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("MoviesAdmin.Models.AudienceRating", b =>
+                {
+                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("MoviesAdmin.Models.Genre", b =>
