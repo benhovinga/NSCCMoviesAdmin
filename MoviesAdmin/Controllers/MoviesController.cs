@@ -74,7 +74,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("MovieId,Title,Synopsis,GenreId,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile PosterFile)
+    public async Task<IActionResult> Create([Bind("MovieId,Title,Synopsis,GenreId,AudienceRatingId,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile PosterFile)
     {
         if (PosterFile != null && PosterFile.Length > 0)
         {
@@ -157,7 +157,7 @@ public class MoviesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("MovieId,Title,Synopsis,GenreId,Rating,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile? PosterFile)
+    public async Task<IActionResult> Edit(int? id, [Bind("MovieId,Title,Synopsis,GenreId,AudienceRatingId,Runtime,ReleaseDate,Director,Producer,Distributor,OriginalLanguage,PosterUrl")] Movie movie, IFormFile? PosterFile)
     {
         if (id != movie.MovieId)
         {
