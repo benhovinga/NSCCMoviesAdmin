@@ -1,12 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using MoviesAdmin.Services;
+using Auth0.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("MoviesAdminContext") ?? throw new InvalidOperationException("Connection string 'MoviesAdminContext' not found.");
+// Auth0 service
+builder.Services.AddAuth0WebAppAuthentication(options =>
+{
+    options.Domain = builder.Configuration["Auth0:Domain"] ?? throw new InvalidOperationException("Configuration string 'Auth0:Domain' not found.");
+    options.ClientId = builder.Configuration["Auth0:ClientId"] ?? throw new InvalidOperationException("Configuration string 'Auth0:ClientId' not found.");
+    options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+});
 
+// Database service
+var connectionString = builder.Configuration.GetConnectionString("MoviesAdminContext") ?? throw new InvalidOperationException("Connection string 'MoviesAdminContext' not found.");
 builder.Services.AddDbContext<MoviesAdminContext>(options => options.UseSqlServer(connectionString));
 
+// Asure Storage service
 builder.Services.AddScoped<IAzureStorageService, AzureStorageService>();
 
 // Add services to the container.
@@ -23,8 +33,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapStaticAssets();

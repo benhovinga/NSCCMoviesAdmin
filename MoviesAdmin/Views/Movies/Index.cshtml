@@ -6,12 +6,15 @@
 
 <h1 class="display-1">Movies</h1>
 
-<p class="text-end">
-    <a asp-action="Create" class="btn btn-primary">
-        <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
-        Add Movie
-    </a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p class="text-end">
+        <a asp-action="Create" class="btn btn-primary">
+            <svg class="bi" aria-hidden="true"><use href="#plus-circle"></use></svg>
+            Add Movie
+        </a>
+    </p>
+}
 
 <table class="table table-striped table-hover">
 @foreach (var item in Model) {    
@@ -34,18 +37,20 @@
                     <span class="badge text-bg-secondary">@Html.DisplayFor(model => item.Genre.Title)</span>
                 </div>
                 <p class="mb-5">@Html.DisplayFor(model => item.Synopsis)</p>
-                
-                <div class="btn-group position-absolute bottom-0 end-0" role="group">
-                    <a asp-action="Edit" asp-route-id="@item.MovieId" class="btn btn-secondary" title="Edit Movie">
-                        <svg class="bi" aria-hidden="true"><use href="#pencil"></use></svg>
-                        Edit
-                    </a>
-                    <a asp-action="Delete" asp-route-id="@item.MovieId" class="btn btn-danger" title="Delete Movie">
-                        <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
-                        <span class="visually-hidden">Delete</span>
-                    </a>
-                </div>
 
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="btn-group position-absolute bottom-0 end-0" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.MovieId" class="btn btn-secondary" title="Edit Movie">
+                            <svg class="bi" aria-hidden="true"><use href="#pencil"></use></svg>
+                            Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.MovieId" class="btn btn-danger" title="Delete Movie">
+                            <svg class="bi" aria-hidden="true"><use href="#trash3"></use></svg>
+                            <span class="visually-hidden">Delete</span>
+                        </a>
+                    </div>
+                }
             </div>
         </td>
     </tr>
