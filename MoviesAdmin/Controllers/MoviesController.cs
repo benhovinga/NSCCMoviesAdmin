@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MoviesAdmin;
 using MoviesAdmin.Models;
 using MoviesAdmin.Services;
 
@@ -20,6 +21,13 @@ public class MoviesController : Controller
     // GET: MOVIES
     public async Task<IActionResult> Index()
     {
+        // Log the currently logged in user
+        var user = User.GetUserId();
+        if (user != null)
+        {
+            Console.WriteLine("Logged in user: " + user);
+        }
+
         var trails = await _context.Movie
             .OrderByDescending(t => t.ReleaseDate)
             .Include(m => m.Genre)
