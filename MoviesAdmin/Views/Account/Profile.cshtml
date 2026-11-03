@@ -10,7 +10,7 @@
                 <img src="@User.FindFirst(c => c.Type == "picture")?.Value" alt="User's profile picture" class="img-fluid rounded-circle" />
             </div>
             <div class="col-md-10">
-                <h3>@User.Identity.Name</h3>
+                <h3>@User.Identity?.Name</h3>
                 <p><strong>Email:</strong> @User.FindFirst(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value</p>
                 <p><strong>Email Verified:</strong> @User.FindFirst(c => c.Type == "email_verified")?.Value</p>
                 <p><strong>User ID:</strong> @User.FindFirst(c => c.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value</p>
