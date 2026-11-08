@@ -10,6 +10,7 @@ builder.Services.AddAuth0WebAppAuthentication(options =>
     options.Domain = builder.Configuration["Auth0:Domain"] ?? throw new InvalidOperationException("Configuration string 'Auth0:Domain' not found.");
     options.ClientId = builder.Configuration["Auth0:ClientId"] ?? throw new InvalidOperationException("Configuration string 'Auth0:ClientId' not found.");
     options.ClientSecret = builder.Configuration["Auth0:ClientSecret"];
+    options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
 // Database service

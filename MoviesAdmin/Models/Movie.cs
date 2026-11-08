@@ -29,6 +29,9 @@ namespace MoviesAdmin.Models
         [ValidateNever]
         public AudienceRating AudienceRating { get; set; } = null!; // Navigation property
 
+        [ValidateNever]
+        public ICollection<CriticReview> CriticReviews { get; } = new List<CriticReview>(); // Navigation property
+
         [Display(Name = "Runtime (minutes)")]
         [Range(0, double.PositiveInfinity)]
         [Required]

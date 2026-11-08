@@ -1,0 +1,79 @@
+@model IEnumerable<MoviesAdmin.Models.CriticReview>
+
+@{
+    ViewData["Title"] = "My Reviews";
+}
+
+<h1>My Reviews</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPublished)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                <!-- Action buttons -->
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Movie.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Review)
+            </td>
+            <td>
+                <div class="rating">
+                @for (int i = 5; i >= 1; i--)
+                {
+                    <input 
+                        type="radio" 
+                        id="star@(item.CriticReviewId).@(i)" 
+                        name="Rating@(item.CriticReviewId)" 
+                        value="@(i)" 
+                        disabled
+                        @if(item.Rating == i) { @("checked") }
+                    />
+                    <label for="star@(item.CriticReviewId).@(i)">@(i) Star</label>
+                }
+                </div>
+                <div class="clearfix"></div>
+            </td>
+            <td>
+                @(item.IsPublished ? "Public" : "Draft")
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.CreatedOn)
+            </td>
+            <td>
+            @if(item.IsPublished)
+            {
+                <a asp-action="Edit" asp-route-id="@item.CriticReviewId">Edit</a> @("|")
+            }
+                <a asp-action="Details" asp-route-id="@item.CriticReviewId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CriticReviewId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

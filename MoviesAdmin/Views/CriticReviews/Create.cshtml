@@ -1,0 +1,58 @@
+@model MoviesAdmin.Models.CriticReview
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CriticReview</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="MovieId" class="form-label"></label>
+                <select asp-for="MovieId" class="form-control form-select" asp-items="ViewBag.MovieId">
+                    <option value="">-- Select a Movie --</option>
+                </select>
+                <span asp-validation-for="Movie" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Review" class="form-label"></label>
+                <textarea asp-for="Review" class="form-control"></textarea>
+                <span asp-validation-for="Review" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <fieldset class="rating">
+                    <div class="form-label">Star Rating</div>
+                    @for (int i = 5; i >= 1; i--) 
+                    {
+                        <input type="radio" id="star@(i)" asp-for="Rating" value="@(i)" />
+                        <label for="star@(i)">@(i) Star</label>
+                    }
+                </fieldset>
+                <div class="clearfix"></div>
+                <span asp-validation-for="Rating" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IsPublished" class="form-label"></label>
+                <input asp-for="IsPublished" class="form-check-input" />
+                <span asp-validation-for="IsPublished" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

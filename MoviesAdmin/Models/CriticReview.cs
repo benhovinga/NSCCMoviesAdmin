@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MoviesAdmin.Models
 {
@@ -6,8 +8,15 @@ namespace MoviesAdmin.Models
     {
         public int CriticReviewId { get; set; }
 
+        [ForeignKey(nameof(Movie))]
+        [Display(Name = "Movie")]
+        public int MovieId { get; set; }
+
+        [ValidateNever]
+        public Movie Movie { get; set; } = null!; // Navigation property
+
         [Required]
-        public string Description { get; set; } = string.Empty;
+        public string Review { get; set; } = string.Empty;
 
         [Display(Name = "Star Rating")]
         [Range(1, 5)]
@@ -20,10 +29,10 @@ namespace MoviesAdmin.Models
 
         [Display(Name = "Created By")]
         [Required]
-        public string CreatedBy { get; set; } = string.Empty;
+        public string CreatedById { get; set; } = string.Empty;
 
-        [Display(Name = "Created Date")]
+        [Display(Name = "Created On")]
         [Required]
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
 }

@@ -1,0 +1,81 @@
+@model MoviesAdmin.Models.CriticReview
+
+@{
+    ViewData["Title"] = "Review Details";
+}
+
+<h1>Review Details</h1>
+
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Movie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Movie.Title)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Review)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Review)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class="col-sm-10">
+            <div class="rating">
+            @for (int i = 5; i >= 1; i--)
+            {
+                <input type="radio"
+                        id="star@(Model.CriticReviewId).@(i)"
+                        name="Rating@(Model.CriticReviewId)"
+                        value="@(i)"
+                        disabled
+                @if (Model.Rating == i)
+                {
+                    @("checked")
+                }
+                />
+                <label for="star@(Model.CriticReviewId).@(i)">@(i) Star</label>
+            }
+            </div>
+            <div class="clearfix"></div>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsPublished)
+        </dt>
+        <dd class = "col-sm-10">
+            @(Model.IsPublished ? "Public" : "Draft")
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedById)  
+        </dt>
+        <dd class = "col-sm-10">
+            @* TODO: Use Auth0 Mangement API to retrive, cache, and display the username from the userId *@
+            @Html.DisplayFor(model => model.CreatedById)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.CriticReviewId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
