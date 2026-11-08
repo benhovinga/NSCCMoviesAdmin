@@ -76,6 +76,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.CriticReviewId">Edit</a> |
+    @if(!Model.IsPublished && Model.CreatedById == User.GetUserId())
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.CriticReviewId">Edit</a> @("|")
+    }
     <a asp-action="Index">Back to List</a>
 </div>

@@ -68,7 +68,8 @@ namespace MoviesAdmin.Migrations
 
                     b.Property<string>("Review")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("CriticReviewId");
 

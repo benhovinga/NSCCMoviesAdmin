@@ -61,6 +61,14 @@
                 @Html.DisplayFor(model => model.OriginalLanguage)
             </dd>
         </dl>
+        <dl class="row">
+            <dt class="col-sm-3">
+                Total Reviews
+            </dt>
+            <dd class="col-sm-5">
+                @Model.CriticReviews.Count(r => r.IsPublished)
+            </dd>
+        </dl>
     </div>
     <div>
         @if (User.IsInRole("Admin"))

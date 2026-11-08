@@ -16,6 +16,7 @@ namespace MoviesAdmin.Models
         public Movie Movie { get; set; } = null!; // Navigation property
 
         [Required]
+        [StringLength(1000)]
         public string Review { get; set; } = string.Empty;
 
         [Display(Name = "Star Rating")]

@@ -247,6 +247,12 @@ public class CriticReviewsController : Controller
             return Unauthorized();
         }
 
+        // Cannot delete a published review, redirect to its details page.
+        if (criticreview.IsPublished)
+        {
+            return RedirectToAction(nameof(Details), new { id });
+        }
+
         return View(criticreview);
     }
 
