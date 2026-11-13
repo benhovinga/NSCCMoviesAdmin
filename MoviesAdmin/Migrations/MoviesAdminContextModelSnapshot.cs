@@ -157,6 +157,27 @@ namespace MoviesAdmin.Migrations
                     b.ToTable("Movie");
                 });
 
+            modelBuilder.Entity("MoviesAdmin.Models.UserSnapshot", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserSnapshot");
+                });
+
             modelBuilder.Entity("MoviesAdmin.Models.CriticReview", b =>
                 {
                     b.HasOne("MoviesAdmin.Models.Movie", "Movie")
