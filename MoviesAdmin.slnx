@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="MoviesAdmin/MoviesAdmin.csproj" />
+  <Project Path="MoviesAPI/MoviesAPI.csproj" Id="2720d46b-b0f6-4ed7-b919-448b8e584625" />
 </Solution>
