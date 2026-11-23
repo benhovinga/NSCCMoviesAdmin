@@ -14,5 +14,8 @@
         public string Distributor { get; set; } = string.Empty;
         public string OriginalLanguage { get; set; } = string.Empty;
         public string PosterUrl { get; set; } = string.Empty;
+
+        public Genre Genre { get; set; } = null!;
+        public List<CriticReview> CriticReviews { get; set; } = null!;
     }
 }
