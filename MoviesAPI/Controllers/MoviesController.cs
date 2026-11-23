@@ -21,7 +21,7 @@ namespace MoviesAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies()
         {
-            // Create 2 movies and return them as a list
+            // Get all movies from the database and return them as a list
             var movies = await _db.QueryAsync<Movie>("SELECT * FROM Movie");
 
             return Ok(movies);  // 200 OK
@@ -31,6 +31,7 @@ namespace MoviesAPI.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<IEnumerable<Movie>>> GetMovieById(int id)
         {
+            // Query to get 1 movie from the database and join with Genre, CriticReview, and User
             var sql = @"SELECT m.*, g.*, r.*, u.*
                 FROM Movie m
                 INNER JOIN Genre g ON m.GenreId = g.GenreId
@@ -40,12 +41,14 @@ namespace MoviesAPI.Controllers
 
             Movie? movie = null;
 
+            // Run the query
             await _db.QueryAsync<Movie, Genre, CriticReview, User, Movie>(
                 sql,
                 (m, g, r, u) =>
                 {
                     if (movie == null)
                     {
+                        // Map Genre and CriticReviews to Movie
                         movie = m;
                         movie.Genre = g;
                         movie.CriticReviews = new List<CriticReview>();
@@ -53,6 +56,7 @@ namespace MoviesAPI.Controllers
 
                     if (r != null)
                     {
+                        // Map User to CriticReview
                         r.User = u;
                         movie.CriticReviews.Add(r);
                     }
@@ -63,10 +67,13 @@ namespace MoviesAPI.Controllers
                 splitOn: "GenreId,CriticReviewId,UserId"
                 );
 
-            if (movie == null) {
+            // Return Not Found error if movie is null
+            if (movie == null)
+            {
                 return NotFound();
             }
 
+            // Return the movie JSON
             return Ok(movie);
         }
     }
