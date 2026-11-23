@@ -63,6 +63,10 @@ namespace MoviesAPI.Controllers
                 splitOn: "GenreId,CriticReviewId,UserId"
                 );
 
+            if (movie == null) {
+                return NotFound();
+            }
+
             return Ok(movie);
         }
     }
