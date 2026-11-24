@@ -178,7 +178,7 @@ public class CriticReviewsController : Controller
         }
 
         // Cannot edit a published review, redirect to its details page.
-        if (criticreview.IsPublished)
+        if (existingReview.IsPublished)
         {
             return RedirectToAction(nameof(Details), new { id });
         }
